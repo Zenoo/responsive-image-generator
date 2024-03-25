@@ -16,6 +16,8 @@ Ensure that you have Node.js and npm installed on your system. If not, you can d
 npm run generate
 ```
 
+Or by double-clicking the `generate.bat` file.
+
 This command will start the conversion process. Once the process is complete, you can find the converted images in the `output` directory.
 
 Please note that the conversion process might take some time depending on the size and number of images.

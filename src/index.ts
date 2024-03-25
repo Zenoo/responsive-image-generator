@@ -6,7 +6,7 @@ const WIDTHS = [320, 640, 960, 1280, 1920];
 const ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
 // Reset output directory
-fs.rmdirSync('output', {recursive: true});
+fs.rmSync('output', {recursive: true});
 fs.mkdirSync('output');
 
 const files = fs.readdirSync('input');
