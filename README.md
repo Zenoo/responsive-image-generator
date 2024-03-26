@@ -30,8 +30,8 @@ To use the converted images in your HTML, you can refer to the following example
 <img
   src="input/image.webp"
   alt="Image"
-  srcset="output/image-320w.webp 320w, output/image-640w.webp 640w, output/image-960w.webp 960w output/image-1280w.webp 1280w output/image-1920w.webp 1920w"
-  sizes="(max-width: 320px) 280px, (max-width: 640px) 640px, (max-width: 960px) 960px, (max-width: 1280px) 1280px, (max-width: 1920px) 1920px"
+  srcset="input/image.webp 2000w, output/image-320w.webp 320w, output/image-640w.webp 640w, output/image-960w.webp 960w output/image-1280w.webp 1280w output/image-1920w.webp 1920w"
+  sizes="(max-width: 2000px) 100vw, 2000px"
 >
 ```
 
