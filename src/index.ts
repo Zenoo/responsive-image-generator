@@ -31,6 +31,12 @@ for (const file of files) {
 
   const promises: Promise<sharp.OutputInfo>[] = [];
 
+  // Optimize the original image
+  const originalDestination = `output/${file}`;
+  const originalPromise = sharp(`input/${file}`).toFile(originalDestination);
+  promises.push(originalPromise);
+
+  // Resize the image to each target width
   WIDTHS.forEach(targetWidth => {
     if (targetWidth >= width) return;
     const fileName = file.split('.').slice(0, -1).join('.');
