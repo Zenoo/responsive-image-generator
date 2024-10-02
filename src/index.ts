@@ -1,6 +1,29 @@
-import sharp from 'sharp';
+import sharp, { Sharp } from 'sharp';
 import fs from 'fs';
 import sizeOf from 'image-size';
+
+const optimizeImage = (sharpInstance: Sharp, file: string) => {
+  const extension = file.split('.').pop();
+
+  if (!extension) {
+    throw new Error(`Could not determine extension of ${file}`);
+  }
+
+  switch (extension) {
+    case 'jpg':
+    case 'jpeg':
+      sharpInstance = sharpInstance.jpeg({quality: 80});
+      break;
+    case 'png':
+      sharpInstance = sharpInstance.png({quality: 80});
+      break;
+    case 'webp':
+      sharpInstance = sharpInstance.webp({quality: 80});
+      break;
+  }
+
+  return sharpInstance;
+};
 
 const WIDTHS = [320, 640, 960, 1280, 1920];
 const ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
@@ -33,7 +56,11 @@ for (const file of files) {
 
   // Optimize the original image
   const originalDestination = `output/${file}`;
-  const originalPromise = sharp(`input/${file}`).toFile(originalDestination);
+  let sharpInstance = sharp(`input/${file}`);
+
+  // Optimize the image depending on the extension
+  sharpInstance = optimizeImage(sharpInstance, file);
+  const originalPromise = sharpInstance.toFile(originalDestination);
   promises.push(originalPromise);
 
   // Resize the image to each target width
@@ -41,7 +68,12 @@ for (const file of files) {
     if (targetWidth >= width) return;
     const fileName = file.split('.').slice(0, -1).join('.');
     const destination = `output/${fileName}-${targetWidth}w.${extension}`;
-    const promise = sharp(`input/${file}`)
+    let sharpInstance = sharp(`input/${file}`);
+
+    // Optimize the image depending on the extension
+    sharpInstance = optimizeImage(sharpInstance, file);
+
+    const promise = sharpInstance
       .resize(targetWidth)
       .toFile(destination);
 
