@@ -28,9 +28,19 @@ const optimizeImage = (sharpInstance: Sharp, file: string) => {
 const WIDTHS = [320, 640, 960, 1280, 1920];
 const ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
+// Create output directory if it doesn't exist
+if (!fs.existsSync('output')) {
+  fs.mkdirSync('output');
+}
+
 // Reset output directory
 fs.rmSync('output', {recursive: true});
 fs.mkdirSync('output');
+
+// Create input directory if it doesn't exist
+if (!fs.existsSync('input')) {
+  fs.mkdirSync('input');
+}
 
 const files = fs.readdirSync('input');
 
